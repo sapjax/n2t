@@ -39,5 +39,50 @@ CHIP CPU {
         pc[15];          // address of next instruction
 
     PARTS:
-    // Put your code here:
+    And(a=true, b=instruction[3], out=destM);
+    And(a=true, b=instruction[4], out=destD);
+    And(a=true, b=instruction[5], out=destA);
+
+    Not(in = instruction[15], out = isAinstrc);
+    Or(a   = destA,           b   = isAinstrc,       out = aLoad);
+    And(a  = destM,           b   = instruction[15], out = writeM);
+    And(a  = destD,           b   = instruction[15], out = dLoad);
+
+    // jmp bits
+    DMux8Way(in=true, sel=instruction[0..2], a=null, b=JGT, c=JEQ, d=JGE, e=JLT, f=JNE, g=JLE, h=JMP);
+
+    // pc load
+    Not(in = ngOut, out = notNg);
+    Not(in = zrOut, out = notZero);
+    And(a  = notNg, b   = notZero, out = notNgOrZero);
+    Or(a   = ngOut, b   = zrOut,   out = ngOrZero);
+
+    
+    And(a = null, b  = false,       out        = j0);
+    And(a = JGT,  b  = notNgOrZero, out        = j1);
+    And(a = JEQ,  b  = zrOut,       out        = j2);
+    And(a = JGE,  b  = notNg,       out        = j3);
+    And(a = JLT,  b  = ngOut,       out        = j4);
+    And(a = JNE,  b  = notZero,     out        = j5);
+    And(a = JLE,  b  = ngOrZero,    out        = j6);
+    And(a = JMP,  b  = true,        out        = j7);
+
+    Or8Way(in[0]=j0,in[1]=j1,in[2]=j2,in[3]=j3,in[4]=j4,in[5]=j5,in[6]=j6,in[7]=j7, out=pcLoad);
+
+    And(a=instruction[15], b=pcLoad, out=pcLoadAndC);
+    PC(in=aRegOut, load=pcLoadAndC, inc=true, reset=reset, out[0..14]=pc);
+
+    // A register
+    Mux16(a=instruction, b=aluOut, sel=instruction[15], out=aRegIn);
+
+    ARegister(in=aRegIn, load=aLoad, out=aRegOut,out[0..14]=addressM);
+
+    // D registrer
+    DRegister(in=aluOut, load=dLoad, out=dRegOut);
+
+    // choise A or M as input to Alu
+    Mux16(a=aRegOut, b=inM, sel=instruction[12], out=aRegOutOrM);
+
+    // ALU
+    ALU(x=dRegOut, y=aRegOutOrM, zx=instruction[11], nx=instruction[10], zy=instruction[9], ny=instruction[8], f=instruction[7], no=instruction[6], out=aluOut, out=outM, zr=zrOut, ng=ngOut);
 }

@@ -1,5 +1,4 @@
-const fs = require('fs')
-const lineReader = require('line-reader')
+const lineReader = require('./line-reader')
 const COMMAND_TYPE = require('./commandType')
 
 class Parser {
@@ -21,7 +20,6 @@ class Parser {
     return new Promise(resolve => {
       this._lineReader.nextLine((err, line) => {
         if (err) throw err
-        console.log(line)
         resolve(line)
       })
     })
@@ -69,6 +67,24 @@ class Parser {
         break
       case 'pop':
         this._currentCommandType = COMMAND_TYPE.C_POP
+        break
+      case 'label':
+        this._currentCommandType = COMMAND_TYPE.C_LABEL
+        break
+      case 'goto':
+        this._currentCommandType = COMMAND_TYPE.C_GOTO
+        break
+      case 'if-goto':
+        this._currentCommandType = COMMAND_TYPE.C_IF
+        break
+      case 'function':
+        this._currentCommandType = COMMAND_TYPE.C_FUNCTION
+        break
+      case 'call':
+        this._currentCommandType = COMMAND_TYPE.C_CALL
+        break
+      case 'return':
+        this._currentCommandType = COMMAND_TYPE.C_RETURN
         break
       default:
     }

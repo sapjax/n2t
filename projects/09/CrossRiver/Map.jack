@@ -1,0 +1,73 @@
+class Map {
+  field int boundaryLeft, riverLeft, riverRight, boundaryRight, bankHigh, y;
+  field int scale;
+
+  constructor Map new() {
+    let y = 10;
+    let scale = 16;
+
+    let boundaryLeft = 0;
+    let boundaryRight = 32;
+    let riverLeft = 6;
+    let riverRight = 25;
+    let bankHigh = 2;
+    return this;
+  }
+
+  method int getY() {
+    return y;
+  }
+
+  method int getRiverLeft() {
+    return riverLeft;
+  }
+
+  method int getRiverRight() {
+    return riverRight;
+  }
+
+  method int getBoundaryLeft() {
+    return boundaryLeft;
+  }
+
+  method int getBoundaryRight() {
+    return boundaryRight;
+  }
+
+  method int getBankHigh() {
+    return bankHigh;
+  }
+
+  method void draw() {
+    var int x1, x2, x3, x4, x5, x6, y1, y2, y3, y4, y5, y6;
+
+    let x1 = boundaryLeft * scale;
+    let x2 = riverLeft * scale;
+    let x3 = x2;
+    let x4 = riverRight * scale;
+    let x5 = x4;
+    let x6 = boundaryRight * scale - 1;
+    let y1 = y * scale;
+    let y2 = y1;
+    let y3 = y1 + (bankHigh * scale);
+    let y4 = y3;
+    let y5 = y1;
+    let y6 = y1;
+
+    do Screen.setColor(true);
+    do Screen.drawLine(x1, y1, x2, y2);
+    do Screen.drawLine(x2, y2, x3, y3);
+    do Screen.drawLine(x3, y3, x4, y4);
+    do Screen.drawLine(x4, y4, x5, y5);
+    do Screen.drawLine(x5, y5, x6, y6);
+    do Screen.drawLine(x1, y1, x2, y2);
+    do Screen.drawLine(x1, y1, x2, y2);
+
+    return;
+  }
+
+  method void dispose() {
+    do Memory.deAlloc(this);
+    return;
+  }
+}

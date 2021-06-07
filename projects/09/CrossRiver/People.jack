@@ -1,0 +1,139 @@
+class People {
+  field int pose;
+  field PeopleBitmap bitmap;
+
+  field int x, y, baseAddr;
+  field boolean erasing;
+
+  constructor People new() {
+    let pose = 0;
+    let x = 0;
+    let y = 0;
+    let baseAddr = 16384;
+    let erasing = false;
+    let bitmap = PeopleBitmap.new();
+
+    return this;
+  }
+
+  method boolean isSatDown() {
+    return pose = 2;
+  }
+
+  method boolean isHandsUp() {
+    return pose = 1;
+  }
+
+  method boolean isStand() {
+    return pose = 0;
+  }
+
+  method void sitDown() {
+    if (pose = 2) {
+      return;
+    }
+    if (pose = 1) {
+      let pose = 0;
+      do setPose(pose);
+      return;
+    }
+    if (pose = 0) {
+      let pose = 2;
+      do setPose(pose);
+      return;
+    }
+    return;
+  }
+
+  method void standUp() {
+    if (pose = 1) {
+      return;
+    }
+    if (pose = 0) {
+      let pose = 1;
+      do setPose(pose);
+      return;
+    }
+    if (pose = 2) {
+      let pose = 0;
+      do setPose(pose);
+      return;
+    }
+    return;
+  }
+
+  method int getPose() {
+    return pose;
+  }
+
+  method void setPose(int pose) {
+    do erase();
+    do bitmap.setPose(pose);
+    do draw();
+    return;
+  }
+
+  method int getWidth() {
+    return 1;
+  }
+
+  method int getHeight() {
+    return 1;
+  }
+
+  method int getX() {
+    return x;
+  }
+
+  method int getY() {
+    return y;
+  }
+
+  method void setX(int offsetX) {
+    do erase();
+    let x = offsetX;
+    return;
+  }
+
+  method void setY(int offsetY) {
+    do erase();
+    let y = offsetY;
+    return;
+  }
+
+  method void draw() {
+    var Array addrs, values;
+    var int memAddress, location, i, length;
+
+    let location = x + (y * 32 * 16);
+    let memAddress = baseAddr + location;
+    let i = 0;
+    let addrs = bitmap.getAddrs();
+    let values = bitmap.getValues();
+    let length = bitmap.getLength();
+
+    while (~(i = length)) {
+      if (erasing) {
+        do Memory.poke(memAddress + addrs[i], 0);
+      }
+      if (~erasing) {
+        do Memory.poke(memAddress + addrs[i], values[i]);
+      }
+      let i = i + 1;
+    }
+    return;
+  }
+
+  method void erase() {
+    let erasing = true;
+    do draw();
+    let erasing = false;
+    return;
+  }
+
+  method void dispose() {
+    do bitmap.dispose();
+    do Memory.deAlloc(this);
+    return;
+  }
+}

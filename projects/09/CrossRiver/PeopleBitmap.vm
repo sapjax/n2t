@@ -1,0 +1,579 @@
+function PeopleBitmap.new 0
+push constant 5
+call Memory.alloc 1
+pop pointer 0
+push constant 16
+pop this 0
+push this 0
+call Array.new 1
+pop this 3
+push constant 0
+push this 3
+add
+push constant 0
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 1
+push this 3
+add
+push constant 32
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 2
+push this 3
+add
+push constant 64
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 3
+push this 3
+add
+push constant 96
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 4
+push this 3
+add
+push constant 128
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 5
+push this 3
+add
+push constant 160
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 6
+push this 3
+add
+push constant 192
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 7
+push this 3
+add
+push constant 224
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 8
+push this 3
+add
+push constant 256
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 9
+push this 3
+add
+push constant 288
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 10
+push this 3
+add
+push constant 320
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 11
+push this 3
+add
+push constant 352
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 12
+push this 3
+add
+push constant 384
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 13
+push this 3
+add
+push constant 416
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 14
+push this 3
+add
+push constant 448
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 15
+push this 3
+add
+push constant 480
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push this 0
+call Array.new 1
+pop this 4
+push pointer 0
+push constant 0
+call PeopleBitmap.setPose 2
+pop temp 0
+push pointer 0
+return
+function PeopleBitmap.setPose 0
+push argument 0
+pop pointer 0
+push argument 1
+push constant 0
+eq
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push constant 0
+push this 4
+add
+push constant 448
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 1
+push this 4
+add
+push constant 864
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 2
+push this 4
+add
+push constant 448
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 3
+push this 4
+add
+push constant 128
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 4
+push this 4
+add
+push constant 128
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 5
+push this 4
+add
+push constant 992
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 6
+push this 4
+add
+push constant 672
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 7
+push this 4
+add
+push constant 672
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 8
+push this 4
+add
+push constant 1712
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 9
+push this 4
+add
+push constant 128
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 10
+push this 4
+add
+push constant 320
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 11
+push this 4
+add
+push constant 544
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 12
+push this 4
+add
+push constant 1040
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 13
+push this 4
+add
+push constant 2056
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 14
+push this 4
+add
+push constant 4100
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 15
+push this 4
+add
+push constant 24579
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+label IF_FALSE0
+push argument 1
+push constant 1
+eq
+if-goto IF_TRUE1
+goto IF_FALSE1
+label IF_TRUE1
+push constant 0
+push this 4
+add
+push constant 6604
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 1
+push this 4
+add
+push constant 3048
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 2
+push this 4
+add
+push constant 2504
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 3
+push this 4
+add
+push constant 1168
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 4
+push this 4
+add
+push constant 672
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 5
+push this 4
+add
+push constant 448
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 6
+push this 4
+add
+push constant 128
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 7
+push this 4
+add
+push constant 128
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 8
+push this 4
+add
+push constant 128
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 9
+push this 4
+add
+push constant 128
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 10
+push this 4
+add
+push constant 320
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 11
+push this 4
+add
+push constant 544
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 12
+push this 4
+add
+push constant 1040
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 13
+push this 4
+add
+push constant 2056
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 14
+push this 4
+add
+push constant 4100
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 15
+push this 4
+add
+push constant 12294
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+label IF_FALSE1
+push argument 1
+push constant 2
+eq
+if-goto IF_TRUE2
+goto IF_FALSE2
+label IF_TRUE2
+push constant 0
+push this 4
+add
+push constant 0
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 1
+push this 4
+add
+push constant 0
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 2
+push this 4
+add
+push constant 0
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 3
+push this 4
+add
+push constant 0
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 4
+push this 4
+add
+push constant 0
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 5
+push this 4
+add
+push constant 0
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 6
+push this 4
+add
+push constant 448
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 7
+push this 4
+add
+push constant 992
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 8
+push this 4
+add
+push constant 448
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 9
+push this 4
+add
+push constant 128
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 10
+push this 4
+add
+push constant 128
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 11
+push this 4
+add
+push constant 128
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 12
+push this 4
+add
+push constant 704
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 13
+push this 4
+add
+push constant 1376
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 14
+push this 4
+add
+push constant 2224
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 15
+push this 4
+add
+push constant 12408
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+label IF_FALSE2
+push constant 0
+return
+function PeopleBitmap.getLength 0
+push argument 0
+pop pointer 0
+push this 0
+return
+function PeopleBitmap.getAddrs 0
+push argument 0
+pop pointer 0
+push this 3
+return
+function PeopleBitmap.getValues 0
+push argument 0
+pop pointer 0
+push this 4
+return
+function PeopleBitmap.dispose 0
+push argument 0
+pop pointer 0
+push pointer 0
+call Memory.deAlloc 1
+pop temp 0
+push constant 0
+return

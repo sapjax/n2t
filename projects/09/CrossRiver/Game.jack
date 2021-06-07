@@ -1,0 +1,487 @@
+class Game {
+  field Map map;
+  field People people;
+  field Boat boat;
+  field Rabbit rabbit;
+  field Carrot carrot;
+  field Wolf wolf;
+  field boolean isPeopleOnBoat, needChecking, isGameEnd;
+  field Array peopleCarrying;
+  field int peopleFootElevation;
+
+
+  constructor Game new() {
+    let isPeopleOnBoat = false;
+    let isGameEnd = false;
+    let needChecking = false;
+    let peopleCarrying = Array.new(1);
+    let peopleFootElevation = 0;
+    return this;
+  }
+
+  method void init() {
+    // add map
+    let map = Map.new();
+
+    // add people
+    let people = People.new();
+    do people.setX(5);
+    do people.setY(map.getY() - people.getHeight());
+
+    // add boat
+    let boat = Boat.new();
+    do boat.setX(map.getRiverLeft());
+    do boat.setY(map.getY() + map.getBankHigh() - boat.getHeight());
+
+    // add rabbit
+    let rabbit = Rabbit.new();
+    do rabbit.setX(1);
+    do rabbit.setY(map.getY() - rabbit.getHeight());
+
+    // add carrot
+    let carrot = Carrot.new();
+    do carrot.setX(2);
+    do carrot.setY(map.getY() - rabbit.getHeight());
+
+    // add wolf
+    let wolf = Wolf.new();
+    do wolf.setX(3);
+    do wolf.setY(map.getY() - rabbit.getHeight());
+
+    do writeGameDescription();
+    do redarw();
+    return;
+  }
+
+  method void keyLeft() {
+    var int nextX;
+    var boolean isSat;
+
+    let needChecking = false;
+    let isSat = people.isSatDown();
+    let nextX = people.getX() - people.getWidth();
+
+    if (isSat) {
+      if (isPeopleOnBoat) {
+        do moveBoatLeft();
+        return;
+      } else {
+        return;
+      }
+    } else {
+      if (isPeopleOnBoat) {
+        if (nextX = (map.getRiverLeft() - people.getWidth())) {
+          do getOffBoat();
+        } else {
+          if (nextX < boat.getX()) {
+            return;
+          }
+        }
+      } else {
+        if (nextX = (map.getRiverRight() - people.getWidth())) {
+          do onboard();
+        } else {
+          if (nextX < map.getBoundaryLeft()) {
+            return;
+          }
+        }
+      }
+    }
+
+    do adjustPeopleFootElevation(nextX);
+    do movePeopleLeft();
+    do redarw();
+    return;
+  }
+
+  method void keyRight() {
+    var int nextX;
+    var boolean isSat;
+
+    let needChecking = false;
+    let isSat = people.isSatDown();
+    let nextX = people.getX() + people.getWidth();
+
+
+    if (isSat) {
+      if (isPeopleOnBoat) {
+        do moveBoatRight();
+        return;
+      } else {
+        return;
+      }
+    } else {
+      if (isPeopleOnBoat) {
+        if (nextX = map.getRiverRight()) {
+          do getOffBoat();
+        } else {
+          if ((nextX + people.getWidth()) > (boat.getX() + boat.getWidth())) {
+            return;
+          }
+        }
+      } else {
+        if (nextX = map.getRiverLeft()) {
+          do onboard();
+        } else {
+          if (nextX + people.getWidth() > map.getBoundaryRight()) {
+            return;
+          }
+        }
+      }
+    }
+
+    do adjustPeopleFootElevation(nextX);
+    do movePeopleRight();
+    do redarw();
+    return;
+  }
+
+  method void keyUp() {
+    var int x;
+    // Note: we use Rabbit type here, but it's not really Rabbit
+    // It might be rabbit or wolf or carrot
+    // Cause Jack doesn't support inherit/entends, we can't use a superType for these subType
+    var Rabbit cargo, carrying;
+
+    if (people.isSatDown()) {
+      do people.standUp();
+      return;
+    }
+
+    let x = people.getX();
+    let cargo = getCargoAtX(x);
+    let carrying = peopleCarrying[0];
+
+    if (cargo) {
+      if (carrying) {
+        let peopleCarrying[0] = cargo;
+        do adjustPeopleFootElevation(x);
+        do carrying.setY(people.getY() + people.getHeight());
+      } else {
+        let peopleCarrying[0] = cargo;
+        do adjustPeopleFootElevation(x);
+      }
+    }
+
+    do people.standUp();
+    do redarw();
+    return;
+  }
+
+  method void keyDown() {
+    var int x;
+    var Rabbit cargo, carrying;
+
+    if (people.isSatDown()) {
+      return;
+    }
+
+    if (people.isStand()) {
+      do people.sitDown();
+      return;
+    }
+
+    if (people.isHandsUp()) {
+      let x = people.getX();
+      let cargo = getCargoAtX(x);
+      let carrying = peopleCarrying[0];
+
+      if (carrying) {
+        // replace cargo
+        if (cargo) {
+          let peopleCarrying[0] = cargo;
+          do adjustPeopleFootElevation(x);
+          do carrying.setY(people.getY() + people.getHeight());
+          // put down
+        } else {
+          let cargo = peopleCarrying[0];
+          let peopleCarrying[0] = null;
+
+          do adjustPeopleFootElevation(x);
+          do cargo.setY(people.getY() + people.getHeight());
+        }
+      } else {
+        do people.sitDown();
+      }
+    }
+
+    do redarw();
+    return;
+  }
+
+  method void movePeopleLeft() {
+    var Rabbit carrying;
+    do people.setX(people.getX() - 1);
+    let carrying = peopleCarrying[0];
+    if (carrying) {
+      do carrying.setX(people.getX());
+    }
+    return;
+  }
+
+  method void movePeopleRight() {
+    var Rabbit carrying;
+    do people.setX(people.getX() + 1);
+    let carrying = peopleCarrying[0];
+    if (carrying) {
+      do carrying.setX(people.getX());
+    }
+    return;
+  }
+
+  method void moveBoatLeft() {
+    if (boat.getX() > map.getRiverLeft()) {
+
+      if (isCargoOnBoat(rabbit)) {
+        do rabbit.setX(rabbit.getX() - 1);
+      }
+      if (isCargoOnBoat(wolf)) {
+        do wolf.setX(wolf.getX() - 1);
+      }
+      if (isCargoOnBoat(carrot)) {
+        do carrot.setX(carrot.getX() - 1);
+      }
+
+      do people.setX(people.getX() - 1);
+      do boat.setX(boat.getX() - 1);
+
+      do redarw();
+    }
+    return;
+  }
+
+  method void moveBoatRight() {
+    if (boat.getX() + boat.getWidth() < map.getRiverRight()) {
+
+      if (isCargoOnBoat(rabbit)) {
+        do rabbit.setX(rabbit.getX() + 1);
+      }
+      if (isCargoOnBoat(wolf)) {
+        do wolf.setX(wolf.getX() + 1);
+      }
+      if (isCargoOnBoat(carrot)) {
+        do carrot.setX(carrot.getX() + 1);
+      }
+
+      do people.setX(people.getX() + 1);
+      do boat.setX(boat.getX() + 1);
+      do redarw();
+    }
+    return;
+  }
+
+  method boolean isCargoOnBoat(Rabbit cargo) {
+    var int x, boatX, boatW;
+    var boolean leftMatch, rightMatch;
+    let x = cargo.getX();
+    let boatX = boat.getX();
+    let boatW = boat.getWidth();
+    let leftMatch = (x > boatX) | (x = boatX);
+    let rightMatch = x < (boatX + boatW);
+
+    return leftMatch & rightMatch;
+  }
+
+  method void onboard() {
+    let isPeopleOnBoat = true;
+    let needChecking = true;
+    return;
+  }
+
+  method void getOffBoat() {
+    let isPeopleOnBoat = false;
+    let needChecking = true;
+    return;
+  }
+
+  method void adjustPeopleFootElevation(int x) {
+    var int h, diff;
+    var Rabbit carrying;
+    let peopleFootElevation = getNextFootElevation(x);
+    let carrying = peopleCarrying[0];
+
+    if (isPeopleOnBoat) {
+      do people.setY(boat.getY() - people.getHeight() - peopleFootElevation);
+    } else {
+      do people.setY(map.getY() - people.getHeight() - peopleFootElevation);
+    }
+
+    if (carrying) {
+      do carrying.setY(people.getY() - carrying.getHeight());
+    }
+    return;
+  }
+
+  method Rabbit getCargoAtX(int x) {
+    if (~(rabbit = peopleCarrying[0]) & (rabbit.getX() = x)) {
+      return rabbit;
+    }
+    if (~(carrot = peopleCarrying[0]) & (carrot.getX() = x)) {
+      return carrot;
+    }
+    if (~(wolf = peopleCarrying[0]) & (wolf.getX() = x)) {
+      return wolf;
+    }
+    return null;
+  }
+
+  method int getNextFootElevation(int x) {
+    var Rabbit cargo;
+    let cargo = getCargoAtX(x);
+    if (cargo) {
+      return cargo.getHeight();
+    }
+    return 0;
+  }
+
+  method void checkResult() {
+    var int rabbitX, wolfX, carrotX, peopleX, rLeft, rRight, errorCode;
+    var boolean rabbitInLeft, rabbitInRight, rabbitInBoat, wolfInLeft, wolfInRight, wolfInBoat, carrotInLeft, carrotInRight, carrotInBoat, peopleInLeft, peopleInRight, peopleInBoat;
+
+    let errorCode = 0;
+    let rabbitX = rabbit.getX();
+    let wolfX = wolf.getX();
+    let peopleX = people.getX();
+    let carrotX = carrot.getX();
+    let rLeft = map.getRiverLeft();
+    let rRight = map.getRiverRight();
+
+    let rabbitInLeft = rabbitX < rLeft;
+    let wolfInLeft = wolfX < rLeft;
+    let carrotInLeft = carrotX < rLeft;
+    let peopleInLeft = peopleX < rLeft;
+
+    let rabbitInRight = (rabbitX > rRight) | (rabbitX = rRight);
+    let wolfInRight = (wolfX > rRight) | (wolfX = rRight);
+    let carrotInRight = (carrotX > rRight) | (carrotX = rRight);
+    let peopleInRight = (peopleX > rRight) | (peopleX = rRight);
+
+    let rabbitInBoat = ~(rabbitInLeft | rabbitInRight);
+    let wolfInBoat = ~(wolfInLeft | wolfInRight);
+    let carrotInBoat = ~(carrotInLeft | carrotInRight);
+    let peopleInBoat = ~(peopleInLeft | peopleInRight);
+
+    if (rabbitInRight & (wolfInRight & carrotInRight)) {
+      do gamePass();
+      return;
+    }
+
+    if (~peopleInLeft) {
+      if (rabbitInLeft & carrotInLeft) {
+        let errorCode = 1;
+      }
+      if (rabbitInLeft & wolfInLeft) {
+        let errorCode = 2;
+      }
+    }
+
+    if (~peopleInRight) {
+      if (rabbitInRight & wolfInRight) {
+        let errorCode = 2;
+      }
+      if (rabbitInRight & carrotInRight) {
+        let errorCode = 1;
+      }
+    }
+
+    if (~peopleInBoat) {
+      if (rabbitInBoat & carrotInBoat) {
+        let errorCode = 1;
+      }
+      if (rabbitInBoat & wolfInBoat) {
+        let errorCode = 2;
+      }
+    }
+
+    if (~(errorCode = 0)) {
+      do gameFailed(errorCode);
+    }
+    let needChecking = false;
+    return;
+  }
+
+  method void gamePass() {
+    do clearText();
+    do writeTextCenter("You Win!!!", 0);
+    do writeTextCenter("You are really a little genius!!!", 1);
+    let isGameEnd = true;
+    return;
+  }
+
+  method void gameFailed(int errorCode) {
+    var String message;
+
+    if (errorCode = 1) {
+      do rabbit.setX(carrot.getX());
+      do carrot.erase();
+      do rabbit.draw();
+      let message = "Your carrot was eaten by the damn rabbit!!!";
+    }
+    if (errorCode = 2) {
+      do wolf.setX(rabbit.getX());
+      do rabbit.erase();
+      do wolf.draw();
+      let message = "Your rabbit was eaten by the damn wolf !!!";
+    }
+
+    do clearText();
+    do writeTextCenter("You lost!", 0);
+    do writeTextCenter(message, 1);
+    do writeTextCenter("Press 'r' key to restart game", 2);
+    let isGameEnd = true;
+    return;
+  }
+
+  method boolean isGameEnd() {
+    return isGameEnd;
+  }
+
+  method void writeTextCenter(String desc, int lineNumber) {
+    var int pos;
+    let pos = (64 - desc.length()) / 2;
+    do Output.moveCursor(4 + (lineNumber * 2), pos);
+    do Output.printString(desc);
+    return;
+  }
+
+  method void writeGameDescription() {
+    do writeTextCenter("Oh My God, what a big river!", 0);
+    do writeTextCenter("How can I cross the river?", 1);
+    do writeTextCenter("The rabbit, wolf, carrot, Hmmm...", 2);
+    return;
+  }
+
+  method void clearText() {
+    do Screen.setColor(false);
+    do Screen.drawRectangle(0, 0, 510, 110);
+    do Screen.setColor(true);
+    return;
+  }
+
+  method void redarw() {
+    do boat.draw();
+    do people.draw();
+    do wolf.draw();
+    do rabbit.draw();
+    do carrot.draw();
+    do map.draw();
+
+    if (needChecking) {
+      do checkResult();
+    }
+    return;
+  }
+
+  method void dispose() {
+    let peopleCarrying[0] = null;
+    do Memory.deAlloc(peopleCarrying);
+    do carrot.dispose();
+    do rabbit.dispose();
+    do wolf.dispose();
+    do people.dispose();
+    do boat.dispose();
+    do map.dispose();
+    do Memory.deAlloc(this);
+    return;
+  }
+}

@@ -1,0 +1,75 @@
+class Boat {
+  field int width, height, scale, x, y;
+  field boolean erasing;
+  field Array loads;
+
+  constructor Boat new() {
+    let scale = 16;
+    let x = 0;
+    let y = 0;
+    let width = 6;
+    let height = 1;
+    let erasing = false;
+    return this;
+  }
+
+  method int getWidth() {
+    return width;
+  }
+
+  method int getHeight() {
+    return height;
+  }
+
+  method int getX() {
+    return x;
+  }
+
+  method int getY() {
+    return y;
+  }
+
+  method void setX(int offsetX) {
+    do erase();
+    let x = offsetX;
+    return;
+  }
+
+  method void setY(int offsetY) {
+    do erase();
+    let y = offsetY;
+    return;
+  }
+
+  method void draw() {
+    var int x1, y1, x2, y2, x3, y3, x4, y4;
+
+    let x1 = (0 + x) * scale;
+    let y1 = (0 + y) * scale;
+    let x2 = (1 + x) * scale;
+    let y2 = (height + y) * scale;
+    let x3 = (width - 1 + x) * scale;
+    let y3 = y2;
+    let x4 = (width + x) * scale;
+    let y4 = y1;
+
+    do Screen.setColor(~erasing);
+    do Screen.drawLine(x1, y1, x2, y2);
+    do Screen.drawLine(x2, y2, x3, y3);
+    do Screen.drawLine(x3, y3, x4, y4);
+    do Screen.drawLine(x4, y4, x1, y1);
+    return;
+  }
+
+  method void erase() {
+    let erasing = true;
+    do draw();
+    let erasing = false;
+    return;
+  }
+
+  method void dispose() {
+    do Memory.deAlloc(this);
+    return;
+  }
+}

@@ -1,0 +1,291 @@
+function Carrot.new 0
+push constant 4
+call Memory.alloc 1
+pop pointer 0
+push constant 0
+pop this 0
+push constant 0
+pop this 1
+push constant 16384
+pop this 2
+push constant 0
+pop this 3
+push pointer 0
+return
+function Carrot.getWidth 0
+push argument 0
+pop pointer 0
+push constant 1
+return
+function Carrot.getHeight 0
+push argument 0
+pop pointer 0
+push constant 1
+return
+function Carrot.getX 0
+push argument 0
+pop pointer 0
+push this 0
+return
+function Carrot.getY 0
+push argument 0
+pop pointer 0
+push this 1
+return
+function Carrot.setX 0
+push argument 0
+pop pointer 0
+push pointer 0
+call Carrot.erase 1
+pop temp 0
+push argument 1
+pop this 0
+push constant 0
+return
+function Carrot.setY 0
+push argument 0
+pop pointer 0
+push pointer 0
+call Carrot.erase 1
+pop temp 0
+push argument 1
+pop this 1
+push constant 0
+return
+function Carrot.draw 2
+push argument 0
+pop pointer 0
+push this 0
+push this 1
+push constant 32
+call Math.multiply 2
+push constant 16
+call Math.multiply 2
+add
+pop local 1
+push constant 16384
+push local 1
+add
+pop local 0
+push this 3
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push local 0
+push constant 0
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 32
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 64
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 96
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 128
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 160
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 192
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 224
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 256
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 288
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 320
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 352
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 384
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 416
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 448
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 480
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+goto IF_END0
+label IF_FALSE0
+push local 0
+push constant 0
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 32
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 64
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 96
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 128
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 160
+add
+push constant 1024
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 192
+add
+push constant 3584
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 224
+add
+push constant 16320
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 256
+add
+push constant 3616
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 288
+add
+push constant 1104
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 320
+add
+push constant 1160
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 352
+add
+push constant 548
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 384
+add
+push constant 324
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 416
+add
+push constant 146
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 448
+add
+push constant 98
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 480
+add
+push constant 28
+call Memory.poke 2
+pop temp 0
+label IF_END0
+push constant 0
+return
+function Carrot.erase 0
+push argument 0
+pop pointer 0
+push constant 0
+not
+pop this 3
+push pointer 0
+call Carrot.draw 1
+pop temp 0
+push constant 0
+pop this 3
+push constant 0
+return
+function Carrot.dispose 0
+push argument 0
+pop pointer 0
+push pointer 0
+call Memory.deAlloc 1
+pop temp 0
+push constant 0
+return

@@ -1,0 +1,302 @@
+function Wolf.new 0
+push constant 4
+call Memory.alloc 1
+pop pointer 0
+push constant 0
+pop this 0
+push constant 0
+pop this 1
+push constant 16384
+pop this 2
+push constant 0
+pop this 3
+push pointer 0
+return
+function Wolf.getWidth 0
+push argument 0
+pop pointer 0
+push constant 1
+return
+function Wolf.getHeight 0
+push argument 0
+pop pointer 0
+push constant 1
+return
+function Wolf.getX 0
+push argument 0
+pop pointer 0
+push this 0
+return
+function Wolf.getY 0
+push argument 0
+pop pointer 0
+push this 1
+return
+function Wolf.setX 0
+push argument 0
+pop pointer 0
+push pointer 0
+call Wolf.erase 1
+pop temp 0
+push argument 1
+pop this 0
+push constant 0
+return
+function Wolf.setY 0
+push argument 0
+pop pointer 0
+push pointer 0
+call Wolf.erase 1
+pop temp 0
+push argument 1
+pop this 1
+push constant 0
+return
+function Wolf.draw 2
+push argument 0
+pop pointer 0
+push this 0
+push this 1
+push constant 32
+call Math.multiply 2
+push constant 16
+call Math.multiply 2
+add
+pop local 1
+push constant 16384
+push local 1
+add
+pop local 0
+push this 3
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push local 0
+push constant 0
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 32
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 64
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 96
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 128
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 160
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 192
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 224
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 256
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 288
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 320
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 352
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 384
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 416
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 448
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 480
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+goto IF_END0
+label IF_FALSE0
+push local 0
+push constant 0
+add
+push constant 16381
+neg
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 32
+add
+push constant 24571
+neg
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 64
+add
+push constant 28663
+neg
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 96
+add
+push constant 20491
+neg
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 128
+add
+push constant 22507
+neg
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 160
+add
+push constant 12277
+neg
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 192
+add
+push constant 22507
+neg
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 224
+add
+push constant 13261
+neg
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 256
+add
+push constant 19026
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 288
+add
+push constant 26214
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 320
+add
+push constant 16386
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 352
+add
+push constant 31807
+neg
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 384
+add
+push constant 32383
+neg
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 416
+add
+push constant 29646
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 448
+add
+push constant 29647
+neg
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 480
+add
+push constant 960
+call Memory.poke 2
+pop temp 0
+label IF_END0
+push constant 0
+return
+function Wolf.erase 0
+push argument 0
+pop pointer 0
+push constant 0
+not
+pop this 3
+push pointer 0
+call Wolf.draw 1
+pop temp 0
+push constant 0
+pop this 3
+push constant 0
+return
+function Wolf.dispose 0
+push argument 0
+pop pointer 0
+push pointer 0
+call Memory.deAlloc 1
+pop temp 0
+push constant 0
+return

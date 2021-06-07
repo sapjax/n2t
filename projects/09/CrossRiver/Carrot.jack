@@ -1,0 +1,97 @@
+class Carrot {
+
+   field int x, y, baseAddr;
+   field boolean erasing;
+
+   constructor Carrot new() {
+      let x = 0;
+      let y = 0;
+      let baseAddr = 16384;
+      let erasing = false;
+      return this; 
+   }
+
+   method int getWidth() {
+      return 1;
+   }
+
+   method int getHeight() {
+      return 1;
+   }
+
+   method int getX() {
+      return x;
+   }
+
+   method int getY() {
+      return y;
+   }
+
+   method void setX(int offsetX) {
+      do erase();
+      let x = offsetX;
+      return;
+   }
+
+   method void setY(int offsetY) {
+      do erase();
+      let y = offsetY;
+      return;
+   }
+
+   method void draw() {
+      var int memAddress, location;
+      let location = x + (y * 32 * 16);
+      let memAddress = 16384+location;
+
+      if(erasing) {
+         do Memory.poke(memAddress+0, 0);
+         do Memory.poke(memAddress+32, 0);
+         do Memory.poke(memAddress+64, 0);
+         do Memory.poke(memAddress+96, 0);
+         do Memory.poke(memAddress+128, 0);
+         do Memory.poke(memAddress+160, 0);
+         do Memory.poke(memAddress+192, 0);
+         do Memory.poke(memAddress+224, 0);
+         do Memory.poke(memAddress+256, 0);
+         do Memory.poke(memAddress+288, 0);
+         do Memory.poke(memAddress+320, 0);
+         do Memory.poke(memAddress+352, 0);
+         do Memory.poke(memAddress+384, 0);
+         do Memory.poke(memAddress+416, 0);
+         do Memory.poke(memAddress+448, 0);
+         do Memory.poke(memAddress+480, 0);
+      } else {
+         do Memory.poke(memAddress+0, 0);
+         do Memory.poke(memAddress+32, 0);
+         do Memory.poke(memAddress+64, 0);
+         do Memory.poke(memAddress+96, 0);
+         do Memory.poke(memAddress+128, 0);
+         do Memory.poke(memAddress+160, 1024);
+         do Memory.poke(memAddress+192, 3584);
+         do Memory.poke(memAddress+224, 16320);
+         do Memory.poke(memAddress+256, 3616);
+         do Memory.poke(memAddress+288, 1104);
+         do Memory.poke(memAddress+320, 1160);
+         do Memory.poke(memAddress+352, 548);
+         do Memory.poke(memAddress+384, 324);
+         do Memory.poke(memAddress+416, 146);
+         do Memory.poke(memAddress+448, 98);
+         do Memory.poke(memAddress+480, 28);
+      }
+
+      return;
+   }
+
+   method void erase() {
+     let erasing = true;
+     do draw();
+     let erasing = false;
+     return;
+   }
+
+   method void dispose() {
+      do Memory.deAlloc(this); 
+      return;
+   }
+}

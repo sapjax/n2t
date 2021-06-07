@@ -1,0 +1,112 @@
+class PeopleBitmap {
+  field int length, height, width;
+  field Array addrs, values;
+
+  constructor PeopleBitmap new() {
+    let length = 16;
+    let addrs = Array.new(length);
+
+    let addrs[0] = 0;
+    let addrs[1] = 32;
+    let addrs[2] = 64;
+    let addrs[3] = 96;
+    let addrs[4] = 128;
+    let addrs[5] = 160;
+    let addrs[6] = 192;
+    let addrs[7] = 224;
+    let addrs[8] = 256;
+    let addrs[9] = 288;
+    let addrs[10] = 320;
+    let addrs[11] = 352;
+    let addrs[12] = 384;
+    let addrs[13] = 416;
+    let addrs[14] = 448;
+    let addrs[15] = 480;
+
+    let values = Array.new(length);
+    do setPose(0);
+
+    return this;
+  }
+
+  method void setPose(int pose) {
+    // normal 
+    if (pose = 0) {
+      let values[0] = 448;
+      let values[1] = 864;
+      let values[2] = 448;
+      let values[3] = 128;
+      let values[4] = 128;
+      let values[5] = 992;
+      let values[6] = 672;
+      let values[7] = 672;
+      let values[8] = 1712;
+      let values[9] = 128;
+      let values[10] = 320;
+      let values[11] = 544;
+      let values[12] = 1040;
+      let values[13] = 2056;
+      let values[14] = 4100;
+      let values[15] = 24579;
+    }
+
+    // hands up
+    if (pose = 1) {
+      let values[0] = 6604;
+      let values[1] = 3048;
+      let values[2] = 2504;
+      let values[3] = 1168;
+      let values[4] = 672;
+      let values[5] = 448;
+      let values[6] = 128;
+      let values[7] = 128;
+      let values[8] = 128;
+      let values[9] = 128;
+      let values[10] = 320;
+      let values[11] = 544;
+      let values[12] = 1040;
+      let values[13] = 2056;
+      let values[14] = 4100;
+      let values[15] = 12294;
+    }
+
+    // sat down
+    if (pose = 2) {
+      let values[0] = 0;
+      let values[1] = 0;
+      let values[2] = 0;
+      let values[3] = 0;
+      let values[4] = 0;
+      let values[5] = 0;
+      let values[6] = 448;
+      let values[7] = 992;
+      let values[8] = 448;
+      let values[9] = 128;
+      let values[10] = 128;
+      let values[11] = 128;
+      let values[12] = 704;
+      let values[13] = 1376;
+      let values[14] = 2224;
+      let values[15] = 12408;
+    }
+
+    return;
+  }
+
+  method int getLength() {
+    return length;
+  }
+
+  method Array getAddrs() {
+    return addrs;
+  }
+
+  method Array getValues() {
+    return values;
+  }
+
+  method void dispose() {
+    do Memory.deAlloc(this);
+    return;
+  }
+}

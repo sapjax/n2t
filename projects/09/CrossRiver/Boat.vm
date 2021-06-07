@@ -1,0 +1,154 @@
+function Boat.new 0
+push constant 7
+call Memory.alloc 1
+pop pointer 0
+push constant 16
+pop this 2
+push constant 0
+pop this 3
+push constant 0
+pop this 4
+push constant 6
+pop this 0
+push constant 1
+pop this 1
+push constant 0
+pop this 5
+push pointer 0
+return
+function Boat.getWidth 0
+push argument 0
+pop pointer 0
+push this 0
+return
+function Boat.getHeight 0
+push argument 0
+pop pointer 0
+push this 1
+return
+function Boat.getX 0
+push argument 0
+pop pointer 0
+push this 3
+return
+function Boat.getY 0
+push argument 0
+pop pointer 0
+push this 4
+return
+function Boat.setX 0
+push argument 0
+pop pointer 0
+push pointer 0
+call Boat.erase 1
+pop temp 0
+push argument 1
+pop this 3
+push constant 0
+return
+function Boat.setY 0
+push argument 0
+pop pointer 0
+push pointer 0
+call Boat.erase 1
+pop temp 0
+push argument 1
+pop this 4
+push constant 0
+return
+function Boat.draw 8
+push argument 0
+pop pointer 0
+push constant 0
+push this 3
+add
+push this 2
+call Math.multiply 2
+pop local 0
+push constant 0
+push this 4
+add
+push this 2
+call Math.multiply 2
+pop local 1
+push constant 1
+push this 3
+add
+push this 2
+call Math.multiply 2
+pop local 2
+push this 1
+push this 4
+add
+push this 2
+call Math.multiply 2
+pop local 3
+push this 0
+push constant 1
+sub
+push this 3
+add
+push this 2
+call Math.multiply 2
+pop local 4
+push local 3
+pop local 5
+push this 0
+push this 3
+add
+push this 2
+call Math.multiply 2
+pop local 6
+push local 1
+pop local 7
+push this 5
+not
+call Screen.setColor 1
+pop temp 0
+push local 0
+push local 1
+push local 2
+push local 3
+call Screen.drawLine 4
+pop temp 0
+push local 2
+push local 3
+push local 4
+push local 5
+call Screen.drawLine 4
+pop temp 0
+push local 4
+push local 5
+push local 6
+push local 7
+call Screen.drawLine 4
+pop temp 0
+push local 6
+push local 7
+push local 0
+push local 1
+call Screen.drawLine 4
+pop temp 0
+push constant 0
+return
+function Boat.erase 0
+push argument 0
+pop pointer 0
+push constant 0
+not
+pop this 5
+push pointer 0
+call Boat.draw 1
+pop temp 0
+push constant 0
+pop this 5
+push constant 0
+return
+function Boat.dispose 0
+push argument 0
+pop pointer 0
+push pointer 0
+call Memory.deAlloc 1
+pop temp 0
+push constant 0
+return

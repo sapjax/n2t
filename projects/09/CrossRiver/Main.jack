@@ -1,0 +1,41 @@
+class Main {
+
+  function void main() {
+    var boolean exit;
+    var char key;
+    var Game game;
+
+    let exit = false;
+
+    let game = Game.new();
+    do game.init();
+
+    while (~exit) {
+      while (key = 0) {
+        let key = Keyboard.keyPressed();
+
+        if(game.isGameEnd()) {
+          if((key = 114) | (key = 82)) { // r or R key
+            do Screen.clearScreen();
+            do game.dispose();
+            let game = Game.new();
+            do game.init();
+          }
+        } else {
+          if (key = 130) { do game.keyLeft(); } // left arrow
+          if (key = 132) { do game.keyRight(); } // right arrow
+          if (key = 131) { do game.keyUp(); } // up arrow
+          if (key = 133) { do game.keyDown(); } // down arrow
+        }
+      }
+
+      while (~(key = 0)) {
+        let key = Keyboard.keyPressed();
+      }
+    }
+
+    do game.dispose();
+
+    return;
+  }
+}

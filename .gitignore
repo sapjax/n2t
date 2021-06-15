@@ -3,3 +3,4 @@
 *.dat
 node_modules/
 package-lock.json
+projects/10/**/*.js

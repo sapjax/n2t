@@ -1,0 +1,14 @@
+{
+  "name": "jack-analyzer",
+  "version": "1.0.0",
+  "scripts": {
+    "build-ts": "tsc",
+    "build": "npm run build-ts",
+    "watch-ts": "tsc -w"
+  },
+  "devDependencies": {
+    "@tsconfig/node16": "*",
+    "@types/node": "^15.12.2",
+    "ts-node": "^9.0.0"
+  }
+}

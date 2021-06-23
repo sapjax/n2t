@@ -77,6 +77,7 @@ class JackTokenizer {
             charQueue = []
           }
         }
+
         if (this.#state === State.token) {
           this.#state = State.blank
           this.#pendingChars = [char]

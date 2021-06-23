@@ -53,3 +53,10 @@ export enum SYMBOLS {
 }
 
 export const IDENTIFIER_REG = /^[_a-z][_a-z0-9]*$/i
+
+export const enum KIND {
+  field = 'field',
+  static = 'static',
+  arguments = 'arguments',
+  local = 'local',
+}

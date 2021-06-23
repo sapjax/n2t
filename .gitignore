@@ -1,6 +1,8 @@
 .DS_Store
 .dat
 *.dat
+.vscode
 node_modules/
 package-lock.json
 projects/10/**/*.js
+projects/11/**/*.js

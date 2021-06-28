@@ -14,7 +14,7 @@ class Keyboard {
     function void init() {
         let kbdAddr = 24576;
         return;
-    }
+    } 
 
     /**
      * Returns the character of the currently pressed key on the keyboard;
@@ -48,13 +48,13 @@ class Keyboard {
     function char readChar() {
         var char c;
 
-        while (Keyboard.keyPressed() = 0) {
+        while(Keyboard.keyPressed() = 0) {
             // do nothing
         }
 
         let c = Keyboard.keyPressed();
 
-        while (~(Keyboard.keyPressed() = 0)) {
+        while(~(Keyboard.keyPressed() = 0)) {
             // do nothing
         }
 
@@ -74,15 +74,15 @@ class Keyboard {
 
         do Output.printString(message);
 
-        while (true) {
+        while(true) {
             let c = Keyboard.readChar();
             // newline
-            if (c = String.newLine()) {
+            if(c = String.newLine()) {
                 do Output.println();
                 return s;
             } else {
                 // backspace
-                if (c = String.backSpace()) {
+                if(c = String.backSpace()) {
                     do s.eraseLastChar();
                     do Output.backSpace();
                 } else {
@@ -91,7 +91,7 @@ class Keyboard {
             }
         }
         return s;
-    }
+    }   
 
     /**								
      * Displays the message on the screen, reads from the keyboard the entered
@@ -110,30 +110,30 @@ class Keyboard {
 
         do Output.printString(message);
 
-        while (true) {
+        while(true) {
             let c = Keyboard.readChar();
 
             // - symbol
-            if (first & (c = 45)) {
+            if(first & (c = 45)) {
                 let one = -1;
             }
             let first = false;
 
             // newline
-            if (c = String.newLine()) {
+            if(c = String.newLine()) {
                 do Output.println();
                 return num * one;
             } else {
                 // 0 ~ 9
-                if ((c > 47) & (c < 58)) {
+                if((c > 47) & (c < 58)) {
                     let num = num * 10 + (c - 48);
                 }
 
                 // backspace
-                if (c = String.backSpace()) {
+                if(c = String.backSpace()) {
                     let num = num / 10;
                     do Output.backSpace();
-                }
+                } 
             }
         }
         return num * one;

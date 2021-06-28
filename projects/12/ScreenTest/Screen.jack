@@ -29,7 +29,7 @@ class Screen {
     /** Sets the current color, to be used for all subsequent drawXXX commands.
      *  Black is represented by true, white by false. */
     function void setColor(boolean b) {
-        if (b) {
+        if(b) {
             let color = -1;
         } else {
             let color = 0;
@@ -40,32 +40,32 @@ class Screen {
     /** Draws the (x,y) pixel, using the current color. */
     function void drawPixel(int x, int y) {
         var int addr, val, i, twoToI;
-        let addr = (32 * y) + (x / 16) + 16384;
+        let addr = (32*y) + (x/16) + 16384;
         let val = Memory.peek(addr);
-        let i = x - ((x / 16) * 16);
+        let i = x - ((x/16) *16);
         let twoToI = 1;
         /** 
          * Note: the rightmost bit of binary is 0'th
          * but it draw the leftmost pixel of the 16pixel on the screen
-         */
-        while (i > 0) {
+         */ 
+        while(i > 0)   {
             let twoToI = twoToI * 2;
-            let i = i - 1;
+            let i = i -1;
         }
 
         // i'th is 0
-        if ((val & twoToI) = 0) {
+        if((val & twoToI) = 0) {
             // set to 1
-            if (color = -1) {
+            if(color = -1) {
                 let val = val | twoToI;
             }
-
-            // i'th is 1
+            
+        // i'th is 1
         } else {
-            // set to 0
-            if (color = 0) {
+           // set to 0
+            if(color = 0) {
                 let val = val & (~twoToI);
-            }
+            } 
         }
 
         do Memory.poke(addr, val);
@@ -74,8 +74,8 @@ class Screen {
 
     /** Draws a line from pixel (x1,y1) to pixel (x2,y2), using the current color. */
     function void drawLine(int x1, int y1, int x2, int y2) {
-        var int dx, dy, a, b, diff, xOne, yOne;
-        let dx = x2 - x1;
+        var int dx, dy,a,b,diff, xOne, yOne;
+        let dx = x2 -x1;
         let dy = y2 - y1;
         let a = 0;
         let b = 0;
@@ -83,17 +83,17 @@ class Screen {
         let xOne = 1;
         let yOne = 1;
 
-        if (dx < 0) {
+        if(dx < 0) {
             let xOne = -1;
         }
 
-        if (dy < 0) {
+        if(dy < 0) {
             let yOne = -1;
         }
 
         // straight line
-        if (dx = 0) {
-            while (~(y2 = y1)) {
+        if(dx = 0) {
+            while(~(y2 = y1)) {
                 do Screen.drawPixel(x1, y1);
                 let y1 = y1 + yOne;
             }
@@ -101,16 +101,16 @@ class Screen {
         }
 
         // straight line
-        if (dy = 0) {
-            while (~(x2 = x1)) {
+        if(dy = 0) {
+            while(~(x2 = x1)) {
                 do Screen.drawPixel(x1, y1);
                 let x1 = x1 + xOne;
             }
             return;
         }
-
+        
         // slash
-        while (~(Math.abs(a) > Math.abs(dx)) & ~(Math.abs(b) > Math.abs(dy))) {
+        while(~(Math.abs(a) > Math.abs(dx)) & ~(Math.abs(b) > Math.abs(dy))) {
             do Screen.drawPixel(x1 + (xOne * a), y1 + (yOne * b));
             if (diff < 0) {
                 let a = a + 1;
@@ -129,14 +129,14 @@ class Screen {
         var int dy, yOne;
 
         let dy = y2 - y1;
-        if (dy < 0) {
+        if(dy < 0) {
             let yOne = -1;
         } else {
             let yOne = 1;
         }
 
-        while ((yOne * y1) < (yOne * y2)) {
-            do Screen.drawLine(x1, y1, x2, y1);
+        while((yOne * y1) < (yOne * y2)) {
+            do Screen.drawLine(x1,y1, x2, y1);
             let y1 = y1 + yOne;
         }
         return;
@@ -148,11 +148,11 @@ class Screen {
 
         let dy = -r;
 
-        if (r > 181) {
+        if(r > 181) {
             return;
         }
 
-        while (~((y + dy) > (y + r))) {
+        while(~((y + dy) > (y + r))) {
             let xOffset = Math.sqrt((r * r) - (dy * dy));
             do Screen.drawLine(x - xOffset, y + dy, x + xOffset, y + dy);
             let dy = dy + 1;

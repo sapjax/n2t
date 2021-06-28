@@ -3,6 +3,7 @@
 *.dat
 .vscode
 node_modules/
+tools/
 package-lock.json
 projects/10/**/*.js
 projects/11/**/*.js

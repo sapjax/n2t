@@ -17,15 +17,12 @@ class Sys {
         do Keyboard.init();
 
         do Main.main();
-
-        // always run
-        while (true) { }
         return;
     }
 
     /** Halts the program execution. */
     function void halt() {
-        while (true) {
+        while(true) {
             // do nothing
         }
         return;
